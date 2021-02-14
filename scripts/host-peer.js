@@ -37,6 +37,7 @@ async function getMyStream(peer) {
 getMyStream();
 
 var openConnections = [];
+var openMediaConnections = [];
 var acceptingBuzzes = true;
 
 function answerCall(call) {
@@ -49,7 +50,9 @@ function answerCall(call) {
     vid.onloadedmetadata = (e) => {
         vid.play()
     }
-  })
+  });
+  openMediaConnections.push(call);
+  console.log(openMediaConnections);
 }
 
 function makeConnection(call) {
@@ -93,11 +96,20 @@ function makeConnection(call) {
     let streamToKill = document.getElementById(`${peerID}`).srcObject;
     streamToKill.getTracks().forEach(track => track.stop());
     $(`#${peerID}`).parent().parent().remove();
-    conn.close();
 
     for (var x = 0; x < openConnections.length; x++) {
-      if (openConnections[x].peer == peerID) {
+      let openConn = openConnections[x];
+      if (openConn.peer == peerID) {
+        openConn.close();
         openConnections.splice(x, 1)
+      }
+    };
+    for (var x = 0; x < openMediaConnections.length; x++) {
+      let openMediaConn = openMediaConnections[x];
+      if (openMediaConn.peer == peerID) {
+        openMediaConn.close();
+        console.log("closed media conn");
+        openMediaConnections.splice(x, 1)
       }
     };
     for (openConn of openConnections) {
@@ -113,10 +125,20 @@ function makeConnection(call) {
     $(`#${peerID}`).parent().parent().remove();
 
     for (var x = 0; x < openConnections.length; x++) {
-      if (openConnections[x].peer == peerID) {
+      let openConn = openConnections[x];
+      if (openConn.peer == peerID) {
+        openConn.close();
         openConnections.splice(x, 1)
       }
-    }
+    };
+    for (var x = 0; x < openMediaConnections.length; x++) {
+      let openMediaConn = openMediaConnections[x];
+      if (openMediaConn.peer == peerID) {
+        openMediaConn.close();
+        console.log("closed media conn");
+        openMediaConnections.splice(x, 1)
+      }
+    };
     for (openConn of openConnections) {
       openConn.send(`@$REMOVE${peerID}`);
       console.log("told conn to delete video");
