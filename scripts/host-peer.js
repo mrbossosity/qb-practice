@@ -153,3 +153,18 @@ peer.on("call", (call) => {
     call.close()
   })
 })
+
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.onunload = function() {
+  for (openConn of openMediaConnections) {
+    openConn.close()
+  };
+  for (openData of openConnections) {
+    openData.close()
+  }
+  peer.destroy()
+}

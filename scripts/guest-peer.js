@@ -109,6 +109,15 @@ peer.on("connection", (conn) => {
         };
       }
     })
+  });
+
+  conn.on("close", () => {
+    alert("Host ended the meeting!");
+    window.history.back()
+  });
+  conn.on("error", () => {
+    alert("Host ended the meeting!");
+    window.history.back()
   })
 })
 
@@ -127,7 +136,6 @@ function answerCall(call) {
 }
 
 peer.on("call", (call) => {
-  let name = call.metadata.username;
   answerCall(call)
 })
 
