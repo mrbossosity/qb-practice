@@ -15,8 +15,6 @@ var myStream = "N/A", audioTracks, videoTracks;
 async function getMyStream(peer) {
   myStream = await navigator.mediaDevices.getUserMedia({
     audio: {
-      // sampleSize: 16,
-      // // sampleRate: {ideal: 32000, max: 44000},
       echoCancellation: true,
       noiseSuppression: true
     }, 
