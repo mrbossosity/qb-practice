@@ -53,7 +53,8 @@ const app = Vue.createApp({
       for (openConn of openConnections) {
         openConn.send(`@$CHAT${msg}`);
       };
-      $(".chat-messages").append(msg)
+      $(".chat-messages").append(msg);
+      $(".chat-messages").scrollTop(1E8);
       $("#chat-input").val("").focus()
     },
 

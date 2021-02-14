@@ -100,7 +100,6 @@ button:hover {
   background-color: white;
   padding: 0.75em;
   border-radius: 5px;
-  position: relative;
   display: flex;
   flex-direction: column;
   overflow: scroll;
@@ -128,10 +127,9 @@ button:hover {
 }
 
 .chat-controls {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
+  background-color: white;
   display: flex;
-  padding: 0.75em;
+  border-top: 0.3em solid white;
 }
 
 #chat-input {

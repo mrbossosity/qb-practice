@@ -86,7 +86,8 @@ peer.on("connection", (conn) => {
       if ((/\@\$CHAT/).test(data)) {
         var str = data;
         let msg = str.substr(6);
-        $(".chat-messages").append(msg)
+        $(".chat-messages").append(msg);
+        $(".chat-messages").scrollTop(1E8);
       }
     })
   })
