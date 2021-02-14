@@ -15,16 +15,20 @@ var myStream = "N/A", audioTracks, videoTracks;
 async function getMyStream(peer) {
   myStream = await navigator.mediaDevices.getUserMedia({
     audio: {
-      sampleSize: 16,
-      sampleRate: {min: 22050, ideal: 32000, max: 48000}
+      // sampleSize: 16,
+      // // sampleRate: {ideal: 32000, max: 44000},
+      echoCancellation: true,
+      noiseSuppression: true
     }, 
     video: {
       width: {max: 640},
       height: {max: 480},
-      frameRate: {min: 10, max: 15},
+      frameRate: {ideal: 10, max: 15},
       facingMode: 'user'
     }
   });
+
+  console.log(myStream.getSupportedConstraints());
   var vid = document.getElementById("myStream");
   vid.srcObject = myStream;
   vid.onloadedmetadata = (e) => {
