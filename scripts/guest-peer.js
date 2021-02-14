@@ -1,4 +1,7 @@
-confirm("Join the room?")
+var entry = confirm("Join the room?");
+if (entry == false) {
+  window.history.back()
+}
 
 const urlParams = new URLSearchParams(window.location.search);
 const username = urlParams.get("user"), myID = urlParams.get("id"), roomCode = urlParams.get("room");
@@ -36,6 +39,7 @@ async function getMyStream(peer) {
   videoTracks = myStream.getVideoTracks();
 }
 
+var openMediaConnections = [];
 
 async function makeCall(id, name) {
   if (myStream == "N/A") {
@@ -54,7 +58,8 @@ async function makeCall(id, name) {
     vid.onloadedmetadata = (e) => {
         vid.play()
     }
-  })
+  });
+  openMediaConnections.push(call)
 }
 
 makeCall(roomCode);
@@ -93,7 +98,15 @@ peer.on("connection", (conn) => {
       if ((/\@\$REMOVE/).test(data)) {
         var str = data;
         let idToRemove = str.substr(8);
-        $(`#${idToRemove}`).parent().parent().remove()
+        $(`#${idToRemove}`).parent().parent().remove();
+        for (var x = 0; x < openMediaConnections.length; x++) {
+          let openMediaConn = openMediaConnections[x];
+          if (openMediaConn.peer == peerID) {
+            openMediaConn.close();
+            console.log("closed media conn");
+            openMediaConnections.splice(x, 1)
+          }
+        };
       }
     })
   })
@@ -109,12 +122,12 @@ function answerCall(call) {
     vid.onloadedmetadata = (e) => {
         vid.play()
     }
-  })
+  });
+  openMediaConnections.push(call)
 }
 
 peer.on("call", (call) => {
   let name = call.metadata.username;
-  console.log(name + " is calling!")
   answerCall(call)
 })
 
@@ -135,4 +148,16 @@ function buzzAnimation() {
 
 function clearBuzz() {
   $(".buzz-inner-light").css("background-color", "gray")
+}
+
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.onunload = function() {
+  for (openConn of openMediaConnections) {
+    openConn.close()
+  }
+  peer.destroy()
 }
