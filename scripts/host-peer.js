@@ -26,7 +26,6 @@ async function getMyStream(peer) {
     }
   });
 
-  console.log(navigator.mediaDevices.getSupportedConstraints());
   var vid = document.getElementById("myStream");
   vid.srcObject = myStream;
   vid.onloadedmetadata = (e) => {

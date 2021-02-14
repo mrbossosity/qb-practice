@@ -41,8 +41,15 @@
             <div id="who-buzzed"></div>
           </div>
         </div>
-        <iframe src="https://quizbowlpackets.com/" id="hsquizbowl"></iframe>
-        <button @click="resetFrame" class="reset-frame">QBPackets Home</button>
+        <iframe v-show="!duplicate" src="https://collegiate.quizbowlpackets.com/" id="hsquizbowl"></iframe>
+        <iframe v-show="duplicate" src="https://collegiate.quizbowlpackets.com/" id="hsquizbowl-2"></iframe>
+        <div class="frame-controls">
+          <button @click="duplicateFrame" id="switch-frames">
+            <span v-show="!duplicate">View Tab 2</span>
+            <span v-show="duplicate">View Tab 1</span>
+          </button>  
+          <button @click="resetFrame" id="reset-frames">QBPackets Home</button>
+        </div>
       </div>
 
       <div class="bottom-container">

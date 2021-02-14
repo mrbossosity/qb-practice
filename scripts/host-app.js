@@ -4,6 +4,8 @@ const app = Vue.createApp({
       user: username,
       code: roomCode,
       chatboxShow: false,
+      duplicate: false,
+      framePage: null,
       vidsContainerShow: true,
       muted: false,
       vidOff: false
@@ -59,7 +61,12 @@ const app = Vue.createApp({
     },
 
     resetFrame() {
-      document.getElementById("hsquizbowl").src = document.getElementById("hsquizbowl").src
+      document.getElementById("hsquizbowl").src = document.getElementById("hsquizbowl").src;
+      document.getElementById("hsquizbowl-2").src = document.getElementById("hsquizbowl-2").src;
+    },
+
+    duplicateFrame() {
+      this.duplicate = !this.duplicate
     }
 
   }
