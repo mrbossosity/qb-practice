@@ -22,7 +22,7 @@
           <div class="divider"></div>
           <div class="chat-messages"></div>
           <div class="chat-controls">
-            <input type="text" name="chat-input" id="chat-input">
+            <input v-on:keydown.enter="sendChat" type="text" name="chat-input" id="chat-input">
             <button @click="sendChat" id="chat-send">Send</button>
           </div>
         </div>
@@ -35,7 +35,12 @@
       </div>
 
       <div class="frame-container">
-        <div id="frame-cover">BUZZ!</div>
+        <div id="frame-cover">
+          <div>
+            <div>BUZZ!</div>
+            <div id="who-buzzed"></div>
+          </div>
+        </div>
         <iframe src="https://quizbowlpackets.com/" id="hsquizbowl"></iframe>
         <button @click="resetFrame" class="reset-frame">QBPackets Home</button>
       </div>
@@ -53,7 +58,7 @@
           <button @click="toggleChat" id="chat-toggle">Chat</button>
         </div>
         <span id="room-info">{{ user }}'s Practice Room ({{ code }})</span>
-        <button @click="clearBuzzers">Clear Buzzers</button>
+        <button @click="clearBuzzers">Clear Buzzer</button>
       </div>
     </div>
 

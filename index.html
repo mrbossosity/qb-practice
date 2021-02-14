@@ -43,7 +43,7 @@
         <div class="hi-user">Hi, {{ username }}!</div>
         <div>
           <label for="room-code">Room Code:</label>
-          <input type="text" name="room-code" id="room-code">
+          <input v-on:keydown.enter="joinRoom" type="text" name="room-code" id="room-code">
         </div>
         <div class="flex-children">
           <button @click="joinRoom">Join practice!</button>

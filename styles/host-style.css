@@ -140,16 +140,31 @@ button:hover {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   height: 100%; 
-  background-color: rgba(255, 0, 0, 0.6);
+  background-color: rgba(255, 0, 0, 0.75);
   font-size: 5rem;
   color: white;
-  text-align: center;
   z-index: 3;
+}
+
+#frame-cover > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-around;
+}
+
+#frame-cover > div > div {
+  text-align: center;
+  width: 100%;
 }
 
 .reset-frame {
   position: absolute;
   top: 0; right: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .bottom-container {

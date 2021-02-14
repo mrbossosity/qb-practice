@@ -73,6 +73,7 @@ function makeConnection(call) {
         openConn.send("LOCKED OUT FROM BUZZ")
       };
       $("#frame-cover").show();
+      $("#who-buzzed").html(`${call.metadata.username}`)
       $("#team-1-buzzer").trigger('play').prop('currentTime', 0);
     } else {
       // fielding chat msgs

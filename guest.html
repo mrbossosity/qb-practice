@@ -54,7 +54,7 @@
           <div class="divider"></div>
           <div class="chat-messages"></div>
           <div class="chat-controls">
-            <input type="text" name="chat-input" id="chat-input">
+            <input v-on:keydown.enter="sendChat" type="text" name="chat-input" id="chat-input">
             <button @click="sendChat" id="chat-send">Send</button>
           </div>
         </div>
