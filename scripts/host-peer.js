@@ -17,9 +17,9 @@ async function getMyStream(peer) {
       sampleRate: {min: 22050, ideal: 32000, max: 48000}
     }, 
     video: {
-      width: {min: 240, ideal: 720, max: 720 },
-      height: {min: 180, ideal: 540, max: 720},
-      frameRate: {min: 12, ideal: 24, max: 30},
+      width: {min: 240, max: 640},
+      height: {min: 180, max: 480},
+      frameRate: {ideal: 10, max: 15},
       facingMode: 'user'
     }
   });
@@ -40,7 +40,7 @@ var acceptingBuzzes = true;
 
 function answerCall(call) {
   call.answer(myStream);
-  var vidEl = `<div class="vid-container"><div username="${call.metadata.username}"><video class="video-stream" id="${call.peer}" autoplay></video></div></div>`;
+  var vidEl = `<div class="vid-container"><div username="${call.metadata.username}"><video class="video-stream" id="${call.peer}"></video></div></div>`;
   $(".vids-container").append(vidEl);
   call.on("stream", (stream) => {
     var vid = document.getElementById(call.peer);
@@ -52,14 +52,15 @@ function answerCall(call) {
 }
 
 function makeConnection(call) {
-  var conn = peer.connect(call.peer);
-  alert(call.metadata.username + " joined the call!");
+  var peerID = call.peer;
+  var conn = peer.connect(peerID);
+  console.log(call.metadata.username + " joined the call!");
   conn.on("open", () => {
-    console.log(`opened connection with ${call.peer}`);
-    conn.send({ "user": username});
+    console.log(`opened connection with ${peerID}`);
+    conn.send({ "user": username });
     openConnections.forEach(openConn => {
       console.log("sent new peer ID");
-      openConn.send([call.peer, call.metadata.username]);
+      openConn.send([peerID, call.metadata.username]);
     })
     openConnections.push(conn)
   })
@@ -84,9 +85,48 @@ function makeConnection(call) {
       $(".chat-messages").append(msg)
     }
   })
+
+  // On disconnect
+  conn.on("close", () => {
+    console.log("conn closed");
+    let streamToKill = document.getElementById(`${peerID}`).srcObject;
+    streamToKill.getTracks().forEach(track => track.stop());
+    $(`#${peerID}`).parent().parent().remove();
+    conn.close();
+
+    for (var x = 0; x < openConnections.length; x++) {
+      if (openConnections[x].peer == peerID) {
+        openConnections.splice(x, 1)
+      }
+    };
+    for (openConn of openConnections) {
+      openConn.send(`@$REMOVE${peerID}`)
+      console.log("told conn to delete video");
+    }
+  });
+
+  conn.on("error", () => {
+    console.log("conn error");
+    let streamToKill = document.getElementById(`${peerID}`).srcObject;
+    streamToKill.getTracks().forEach(track => track.stop());
+    $(`#${peerID}`).parent().parent().remove();
+
+    for (var x = 0; x < openConnections.length; x++) {
+      if (openConnections[x].peer == peerID) {
+        openConnections.splice(x, 1)
+      }
+    }
+    for (openConn of openConnections) {
+      openConn.send(`@$REMOVE${peerID}`);
+      console.log("told conn to delete video");
+    }
+  })
 }
 
 peer.on("call", (call) => {
   answerCall(call);
-  makeConnection(call)
+  makeConnection(call);
+  call.on("close", () => {
+    call.close()
+  })
 })

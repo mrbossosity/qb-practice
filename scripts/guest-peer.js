@@ -19,9 +19,9 @@ async function getMyStream(peer) {
       sampleRate: {min: 22050, ideal: 32000, max: 48000}
     }, 
     video: {
-      width: {min: 240, ideal: 720, max: 720 },
-      height: {min: 180, ideal: 540, max: 720},
-      frameRate: {min: 12, ideal: 24, max: 30},
+      width: {max: 640},
+      height: {max: 480},
+      frameRate: {min: 10, max: 15},
       facingMode: 'user'
     }
   });
@@ -35,10 +35,12 @@ async function getMyStream(peer) {
   videoTracks = myStream.getVideoTracks();
 }
 
-// var openMediaConnections = [];
 
 async function makeCall(id, name) {
-  if (myStream == "N/A") { await getMyStream() };
+  if (myStream == "N/A") {
+    console.log("getting stream"); 
+    await getMyStream();
+  };
   var call = peer.call(id, myStream, {
     metadata: { "username": username }
   });
@@ -52,8 +54,6 @@ async function makeCall(id, name) {
         vid.play()
     }
   })
-
-  // openMediaConnections.push(call);
 }
 
 makeCall(roomCode);
@@ -89,13 +89,18 @@ peer.on("connection", (conn) => {
         $(".chat-messages").append(msg);
         $(".chat-messages").scrollTop(1E8);
       }
+      if ((/\@\$REMOVE/).test(data)) {
+        var str = data;
+        let idToRemove = str.substr(8);
+        $(`#${idToRemove}`).parent().parent().remove()
+      }
     })
   })
 })
 
 function answerCall(call) {
   call.answer(myStream);
-  let vidEl = `<div class="vid-container"><div username="${call.metadata.username}"><video class="video-stream" id="${call.peer}" autoplay></video><div></div>`;
+  let vidEl = `<div class="vid-container"><div username="${call.metadata.username}"><video class="video-stream" id="${call.peer}"></video><div></div>`;
   $(".vids-container").append(vidEl);
   call.on("stream", (stream) => {
     var vid = document.getElementById(call.peer);
