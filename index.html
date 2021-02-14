@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+  <script src="./scripts/app.js" defer></script>
+  <title>QB Practice</title>
+</head>
+<body>
+  <div id="app">
+    <div class="supreme-container">
+
+      <div v-show="welcomeModalShow" class="init-modal" id="welcome-modal">
+        <div class="modal-title">Welcome to Practice!</div>
+        <div>
+          <label for="username">Your name:</label>
+          <input type="text" name="username" id="username" autofocus>
+        </div>
+        <div class="flex-children">
+          <button @click="showCreateModal">Create Room</button>
+          <button @click="showJoinModal">Join Room</button>
+        </div>
+      </div>
+
+      <div v-show="createModalShow" class="init-modal" id="create-modal">
+        <div class="modal-title">Create Room</div>
+        <div class="hi-user">Hi, {{ username }}!</div>
+        <div>Your room code is:<span class="room-code">{{ roomCode }}</span></div>
+        <div class="flex-children">
+          <button @click="createRoom">Start practice!</button>
+          <button @click="back">Back</button>
+        </div>
+      </div>
+
+      <div v-show="joinModalShow" class="init-modal" id="join-modal">
+        <div class="modal-title">Join Room</div>
+        <div class="hi-user">Hi, {{ username }}!</div>
+        <div>
+          <label for="room-code">Room Code:</label>
+          <input type="text" name="room-code" id="room-code">
+        </div>
+        <div class="flex-children">
+          <button @click="joinRoom">Join practice!</button>
+          <button @click="back">Back</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

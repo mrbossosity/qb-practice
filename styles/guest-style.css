@@ -1,0 +1,162 @@
+.supreme-container *, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(35, 35, 35);
+  overflow: hidden;
+  font-family: "Noto Sans SC", Arial, Helvetica, sans-serif;
+}
+
+button {
+  font-size: 1.1em;
+  font-family: "Noto Sans SC", Arial, Helvetica, sans-serif;
+  color: white;
+  background: linear-gradient(to bottom, white, gray 25%);
+  border: 1px solid dimgray;
+  border-radius: 6px;
+  padding: 0.2em 0.3em;
+  cursor: pointer;
+}  
+
+button:hover {
+  background: linear-gradient(to bottom, white, darkorange 20%);
+}
+
+.supreme-container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+}
+
+.main-container {
+  height: 100%;
+  overflow: scroll;
+  background-color: black;
+}
+
+.vids-container {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: minmax(170px, 1fr);
+  gap: 0.75em;
+  border-right: 4px solid darkorange;
+  padding: 1em;
+  overflow: scroll
+}
+
+.vid-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vid-container > div {
+  position: relative
+}
+
+.vid-container > div::before {
+  content: attr(username);
+  position: absolute;
+  bottom: 0; left: 0;
+  color: white;
+  font-size: 0.8em;
+  background-color: rgb(15, 15, 15);
+  border: 2px solid rgb(35,35,35);
+  padding: 0.3em 0.6em;
+  margin-bottom: 0.5em
+}
+
+.video-stream {
+  background-color: dimgray;
+  width: 100%; height: auto; 
+  max-height: 100%; 
+  border: 2px solid rgb(35, 35, 35)
+}
+
+.buzz-and-chat-container {
+  min-height: 100%;
+  padding: 1em;
+  overflow: scroll;
+}
+
+.buzzer-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buzzer-container * {
+  box-sizing: content-box;
+}
+
+.chatbox-container {
+  height: 100%; width: 391px;
+  background-color: white;
+  padding: 0.75em;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.chatbox-container > div {
+  margin-bottom: 0.5em;
+}
+
+.chat-header {
+  font-size: 1.25em;
+}
+
+.divider {
+  border: 1px solid darkgray;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow: scroll
+}
+
+.chat-message {
+  margin-bottom: 0.75em;
+}
+
+.chat-controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  padding: 0.75em;
+}
+
+#chat-input {
+  border: 2px solid lightgray;
+  min-width: 0;
+  flex-grow: 1;
+  margin-right: 0.75em;
+  font-size: 1.1em
+}
+
+.bottom-container {
+  padding: 0.75em;
+  grid-column: 1 / 3;
+  border-top: 3px solid darkorange;
+  background-color: rgb(40,40,40);
+  display: flex;
+  justify-content: space-between;
+}
+
+#room-info {
+  font-size: 1.4em;
+  color: white;
+}
+
+.av-controls {
+  display: inline-flex;
+  gap: 0.75em
+}
