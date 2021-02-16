@@ -1,7 +1,7 @@
-function codeGen() {
+function codeGen(length) {
   var digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   var id = '', x = 0;
-  while (x < 6) { 
+  while (x < length) { 
       let digit = digits[Math.floor(Math.random() * digits.length)];
       id += digit;
       x ++
@@ -17,7 +17,8 @@ const app = Vue.createApp({
       createModalShow: false,
       joinModalShow: false,
       username: "anon",
-      roomCode: null
+      roomCode: null,
+      joinRoomCode: null,
     }
   },
 
@@ -25,10 +26,13 @@ const app = Vue.createApp({
     showCreateModal() {
       this.welcomeModalShow = false;
       this.createModalShow = true;
-      this.roomCode = codeGen();
+      this.roomCode = codeGen(6);
       if ($("#username").val() !== "") {
         this.username = $("#username").val()
-      }
+      };
+      let shareableLink = `https://mrbossosity.io/qb-practice/share.html?=name=${this.username}&code=${this.roomCode}`;
+      $("#link-hidden").val(shareableLink);
+      new ClipboardJS("#copy-link")
     },
 
     showJoinModal() {
@@ -51,10 +55,14 @@ const app = Vue.createApp({
       window.location.href = `./host.html?user=${user}&room=${room}`
     },
 
+    copyLink() {
+      alert("Link copied to clipboard!")
+    },
+
     joinRoom() {
       let user = encodeURIComponent(this.username);
-      let room = encodeURIComponent($("#room-code").val());
-      let id = encodeURIComponent(codeGen());
+      let room = encodeURIComponent(this.joinRoomCode);
+      let id = encodeURIComponent(codeGen(12));
       if (room.length < 6) {
         alert("That's not a valid code!");
         return
