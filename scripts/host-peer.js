@@ -33,7 +33,8 @@ peer.on("connection", (conn) => {
       $("#team-1-buzzer").trigger('play').prop('currentTime', 0);
       $("#frame-cover").show();
       $("#who-buzzed").html(`${conn.metadata.username}`);
-      $(".chat-messages").append(`<div class="chat-message"><i>${conn.metadata.username} buzzed!</i></div>`)
+      $(".chat-messages").append(`<div class="chat-message"><i>${conn.metadata.username} buzzed!</i></div>`);
+      $(".chat-messages").scrollTop(1E8);
       
     } else {
       // fielding chat msgs

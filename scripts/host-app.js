@@ -23,7 +23,8 @@ const app = Vue.createApp({
         console.log("sent unlock");
       };
       $("#frame-cover").hide();
-      $(".chat-messages").append(`<div class="chat-message"><hr></div>`)
+      $(".chat-messages").append(`<div class="chat-message"><hr></div>`);
+      $(".chat-messages").scrollTop(1E8);
       console.log("cleared buzzers");
     },
 
