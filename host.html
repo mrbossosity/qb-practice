@@ -16,6 +16,9 @@
 <body>
   <div id="app">
     <div class="supreme-container">
+
+      <div v-show="!join" @click="joinRoom" class="click-to-join">Click to open room!</div>
+
       <div class="main-container">
         <div v-show="chatboxShow" class="chatbox-container">
           <div class="chatbox">

@@ -3,12 +3,18 @@ const app = Vue.createApp({
     return {
       user: username,
       code: roomCode,
+      join: false,
       chatboxShow: true,
       tabTwo: false
     }
   },
 
   methods: {
+    joinRoom() {
+      this.join = true;
+      getConnected()
+    },
+    
     toggleChat() {
       this.chatboxShow = !this.chatboxShow;
       $("#chat-toggle").blur();
