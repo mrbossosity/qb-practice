@@ -52,6 +52,7 @@ button:hover {
 }
 
 .chatbox-container {
+  border-right: 4px solid darkorange;
   padding: 1em
 }
 
@@ -103,7 +104,6 @@ button:hover {
 .frame-container {
   height: 100%;
   width: 100%;
-  border-left: 4px solid darkorange;
   position: relative;
   display: flex;
 }
