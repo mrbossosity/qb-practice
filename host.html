@@ -18,54 +18,42 @@
     <div class="supreme-container">
       <div class="main-container">
         <div v-show="chatboxShow" class="chatbox-container">
-          <div class="chat-header">Chat</div>
-          <div class="divider"></div>
-          <div class="chat-messages"></div>
-          <div class="chat-controls">
-            <input v-on:keydown.enter="sendChat" type="text" name="chat-input" id="chat-input">
-            <button @click="sendChat" id="chat-send">Send</button>
+          <div class="chatbox">
+            <div class="chat-header">Chat</div>
+            <div class="divider"></div>
+            <div class="chat-messages"></div>
+            <div class="chat-controls">
+              <input v-on:keydown.enter="sendChat" type="text" name="chat-input" id="chat-input">
+              <button @click="sendChat" id="chat-send">Send</button>
+            </div>          
+        </div>
+        </div>
+
+        <div class="frame-container">
+          <div id="frame-cover">
+            <div>
+              <div>BUZZ!</div>
+              <div id="who-buzzed"></div>
+            </div>
+          </div>
+          <iframe v-show="!tabTwo" src="https://collegiate.quizbowlpackets.com/" id="hsquizbowl"></iframe>
+          <iframe v-show="tabTwo" src="https://collegiate.quizbowlpackets.com/" id="hsquizbowl-2"></iframe>
+          <div class="frame-controls">
+            <button @click="switchTab" id="switch-frames">
+              <span v-show="!tabTwo">View Tab 2</span>
+              <span v-show="tabTwo">View Tab 1</span>
+            </button>  
+            <button @click="resetFrame" id="reset-frames">QBPackets Home</button>
           </div>
         </div>
 
-        <div v-show="vidsContainerShow" class="vids-container">
-          <div class="vid-container">
-            <div username="Me"><video class="video-stream" id="myStream" muted></video></div>
-          </div>
-        </div>
       </div>
 
-      <div class="frame-container">
-        <div id="frame-cover">
-          <div>
-            <div>BUZZ!</div>
-            <div id="who-buzzed"></div>
-          </div>
-        </div>
-        <iframe v-show="!duplicate" src="https://collegiate.quizbowlpackets.com/" id="hsquizbowl"></iframe>
-        <iframe v-show="duplicate" src="https://collegiate.quizbowlpackets.com/" id="hsquizbowl-2"></iframe>
-        <div class="frame-controls">
-          <button @click="duplicateFrame" id="switch-frames">
-            <span v-show="!duplicate">View Tab 2</span>
-            <span v-show="duplicate">View Tab 1</span>
-          </button>  
-          <button @click="resetFrame" id="reset-frames">QBPackets Home</button>
-        </div>
-      </div>
 
       <div class="bottom-container">
-        <div class="av-controls">
-          <button @click="mute">
-            <span v-show="!muted">Mute</span>
-            <span v-show="muted">Unmute</span>
-          </button>
-          <button @click="hideVid">
-            <span v-show="!vidOff">Hide</span>
-            <span v-show="vidOff">Show</span>
-          </button>
-          <button @click="toggleChat" id="chat-toggle">Chat</button>
-        </div>
-        <span id="room-info">{{ user }}'s Practice Room ({{ code }})</span>
-        <button @click="clearBuzzers">Clear Buzzer</button>
+        <div><button @click="toggleChat">Chat</button></div>
+        <div><span id="room-info">{{ user }}'s Practice Room ({{ code }})</span></div>
+        <div><button @click="clearBuzzers" id="clear-buzzer">Clear Buzzer</button></div>
       </div>
     </div>
 

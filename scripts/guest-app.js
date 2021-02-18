@@ -4,17 +4,19 @@ const app = Vue.createApp({
       user: username,
       host: hostName,
       code: roomCode,
-      chatboxShow: false,
-      buzzerShow: true,
-      muted: false,
-      vidOff: false
+      join: false,
+      chatboxShow: true
     }
   },
 
   methods: {
+    joinRoom() {
+      this.join = true;
+      getConnected()
+    },
+
     toggleChat() {
       this.chatboxShow = !this.chatboxShow;
-      this.buzzerShow = !this.buzzerShow
     },
 
     buzz() {
@@ -24,26 +26,6 @@ const app = Vue.createApp({
         hostConnection.send(bzz);
         $("#team-1-buzzer").trigger('play').prop('currentTime', 0);
         buzzAnimation()
-      }
-    },
-
-    mute() {
-      if (!this.muted) {
-        audioTracks.forEach(track => track.enabled = false);
-        this.muted = true;
-      } else {
-        audioTracks.forEach(track => track.enabled = true);
-        this.muted = false;
-      }
-    },
-
-    hideVid() {
-      if (!this.vidOff) {
-        videoTracks.forEach(track => track.enabled = false);
-        this.vidOff = true;
-      } else {
-        videoTracks.forEach(track => track.enabled = true);
-        this.vidOff = false;
       }
     },
 

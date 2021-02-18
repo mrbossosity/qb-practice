@@ -3,50 +3,27 @@ const app = Vue.createApp({
     return {
       user: username,
       code: roomCode,
-      chatboxShow: false,
-      duplicate: false,
-      framePage: null,
-      vidsContainerShow: true,
-      muted: false,
-      vidOff: false
+      chatboxShow: true,
+      tabTwo: false
     }
   },
 
   methods: {
     toggleChat() {
       this.chatboxShow = !this.chatboxShow;
-      this.vidsContainerShow = !this.vidsContainerShow;
       $("#chat-toggle").blur();
       $("#chat-input").focus()
-    },
-
-    mute() {
-      if (!this.muted) {
-        audioTracks.forEach(track => track.enabled = false);
-        this.muted = true;
-      } else {
-        audioTracks.forEach(track => track.enabled = true);
-        this.muted = false;
-      }
-    },
-
-    hideVid() {
-      if (!this.vidOff) {
-        videoTracks.forEach(track => track.enabled = false);
-        this.vidOff = true;
-      } else {
-        videoTracks.forEach(track => track.enabled = true);
-        this.vidOff = false;
-      }
     },
 
     clearBuzzers() {
       acceptingBuzzes = true;
       for (openConn of openConnections) {
-        openConn.send("UNLOCKED FROM BUZZ");
+        openConn.send("@$UNLOCKED FROM BUZZ");
+        openConn.send(`@$CHAT<div class="chat-message"><hr></div>`)
         console.log("sent unlock");
       };
       $("#frame-cover").hide();
+      $(".chat-messages").append(`<div class="chat-message"><hr></div>`)
       console.log("cleared buzzers");
     },
 
@@ -65,8 +42,8 @@ const app = Vue.createApp({
       document.getElementById("hsquizbowl-2").src = document.getElementById("hsquizbowl-2").src;
     },
 
-    duplicateFrame() {
-      this.duplicate = !this.duplicate
+    switchTab() {
+      this.tabTwo = !this.tabTwo
     }
 
   }

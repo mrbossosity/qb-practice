@@ -17,18 +17,12 @@
 <body>
   <div id="app">
     <div class="supreme-container">
+      <div v-show="!join" @click="joinRoom" class="click-to-join">Click to join room!</div>
 
       <div class="main-container">
-        <div class="vids-container">
-          <div class="vid-container">
-            <div username="Me"><video class="video-stream" id="myStream" muted></video></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="buzz-and-chat-container">
-        <div v-show="buzzerShow" class="buzzer-container">
-          <div class="black-box">
+        <div class="buzzer-container">
+          <div @click="buzz" class="black-box">
             <div class="buzz-upper-dots">
               <div class="buzz-left-dot upper-dot"></div>
               <div class="buzz-right-dot upper-dot"></div>
@@ -36,7 +30,7 @@
             <div class="buzz-light">
               <div class="buzz-inner-light"></div>
             </div>
-            <div @click="buzz" class="buzz-button">
+            <div class="buzz-button">
               <div class="buzz-outer-button">
                 <div class="buzz-inner-button"></div>
               </div>
@@ -50,30 +44,23 @@
         </div>
 
         <div v-show="chatboxShow" class="chatbox-container">
-          <div class="chat-header">Chat</div>
-          <div class="divider"></div>
-          <div class="chat-messages"></div>
-          <div class="chat-controls">
-            <input v-on:keydown.enter="sendChat" type="text" name="chat-input" id="chat-input">
-            <button @click="sendChat" id="chat-send">Send</button>
+          <div class="chatbox">
+            <div class="chat-header">Chat</div>
+            <div class="divider"></div>
+            <div class="chat-messages"></div>
+            <div class="chat-controls">
+              <input v-on:keydown.enter="sendChat" type="text" name="chat-input" id="chat-input">
+              <button @click="sendChat" id="chat-send">Send</button>
+            </div>
           </div>
         </div>
 
       </div>
 
       <div class="bottom-container">
-        <div class="av-controls">
-          <button @click="mute">
-            <span v-show="!muted">Mute</span>
-            <span v-show="muted">Unmute</span>
-          </button>
-          <button @click="hideVid">
-            <span v-show="!vidOff">Hide</span>
-            <span v-show="vidOff">Show</span>
-          </button>
-        </div>
-        <span id="room-info"><span id="host-name"></span>'s Practice Room ({{ code }})</span>
-        <button @click="toggleChat">Chat</button>
+        <div></div>
+        <div><span id="room-info"><span id="host-name"></span>'s Practice Room ({{ code }})</span></div>
+        <div><button @click="toggleChat" id="toggle-chat">Chat</button></div>
       </div>
 
       <audio style='display: none' id="team-1-buzzer" preload="auto">
