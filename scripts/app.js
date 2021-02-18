@@ -30,7 +30,7 @@ const app = Vue.createApp({
       if ($("#username").val() !== "") {
         this.username = $("#username").val()
       };
-      let shareableLink = `https://mrbossosity.io/qb-practice/share.html?host=${this.username}&code=${this.roomCode}`;
+      let shareableLink = `https://mrbossosity.github.io/qb-practice/share.html?host=${this.username}&code=${this.roomCode}`;
       $("#link-hidden").val(shareableLink);
       new ClipboardJS("#copy-link")
     },
