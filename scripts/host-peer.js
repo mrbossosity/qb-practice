@@ -23,6 +23,7 @@ function getConnected() {
         openConn.send(`@$CHAT${joinMsg}`);
       };
       $(".chat-messages").append(joinMsg);
+      $(".chat-messages").scrollTop(1E8);
     })
 
     // Fielding buzzes
@@ -47,7 +48,8 @@ function getConnected() {
         for (openConn of openConnections) {
           openConn.send(`@$CHAT${msg}`);
         };
-        $(".chat-messages").append(msg)
+        $(".chat-messages").append(msg);
+        $(".chat-messages").scrollTop(1E8);
       }
     })
 
