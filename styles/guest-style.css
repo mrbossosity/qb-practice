@@ -29,6 +29,7 @@ button:hover {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
+  visibility: hidden;
 }
 
 .click-to-join {

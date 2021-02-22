@@ -12,7 +12,7 @@ const app = Vue.createApp({
   methods: {
     joinRoom() {
       this.join = true;
-      getConnected()
+      getConnected(this.connected)
     },
     
     toggleChat() {

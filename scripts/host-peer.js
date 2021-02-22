@@ -16,9 +16,13 @@ function getConnected() {
   peer.on("connection", (conn) => {
     var peerID = conn.peer;
     conn.on("open", () => {
-      console.log(conn.metadata.username + " joined the room!");
       conn.send({ "user": username });
-      openConnections.push(conn)
+      openConnections.push(conn);
+      let joinMsg = `<div class="chat-message"><i>${conn.metadata.username} joined the room!</i></div>`;
+      for (openConn of openConnections) {
+        openConn.send(`@$CHAT${joinMsg}`);
+      };
+      $(".chat-messages").append(joinMsg);
     })
 
     // Fielding buzzes

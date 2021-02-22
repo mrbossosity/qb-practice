@@ -5,6 +5,7 @@ const app = Vue.createApp({
       host: hostName,
       code: roomCode,
       join: false,
+      connected: false,
       chatboxShow: true
     }
   },

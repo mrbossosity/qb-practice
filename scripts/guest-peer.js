@@ -19,11 +19,9 @@ function getConnected() {
   });
 
   hostConnection.on("open", () => {
-    console.log("Connected to host!");
-    
     hostConnection.on("data", (data) => {
-      console.log(data);
       if (typeof data === "object") {
+        $(".supreme-container").css("visibility", "visible")
         $("#host-name").html(data.user);
       }
       if (data == "@$LOCKED OUT FROM BUZZ") {
