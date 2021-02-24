@@ -24,8 +24,12 @@ function getConnected() {
         $(".supreme-container").css("visibility", "visible")
         $("#host-name").html(data.user);
       }
+      if (data == "@$YOU BUZZED") {
+        lockout = true;
+      }
       if (data == "@$LOCKED OUT FROM BUZZ") {
-        lockout = true
+        lockout = true;
+        $("#team-2-buzzer").trigger('play').prop('currentTime', 0);
       }
       if (data == "@$UNLOCKED FROM BUZZ") {
         lockout = false;
@@ -75,8 +79,6 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 window.onunload = function() {
-  for (openConn of openMediaConnections) {
-    openConn.close()
-  }
+  hostConnection.close();
   peer.destroy()
 }

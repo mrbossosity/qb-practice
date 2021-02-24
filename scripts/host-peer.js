@@ -31,9 +31,13 @@ function getConnected() {
       if (Array.isArray(data) && acceptingBuzzes == true) {
         acceptingBuzzes = false;
         for (openConn of openConnections) {
-          console.log("sent lockout");
-          openConn.send("@$LOCKED OUT FROM BUZZ");
+          if (openConn.peer == peerID) {
+            openConn.send("@$YOU BUZZED");
+          } else {
+            openConn.send("@$LOCKED OUT FROM BUZZ");
+          }
           openConn.send(`@$CHAT<div class="chat-message"><i>${conn.metadata.username} buzzed!</i></div>`);
+          console.log("sent lockout");
         };
 
         $("#team-1-buzzer").trigger('play').prop('currentTime', 0);
@@ -42,8 +46,10 @@ function getConnected() {
         $(".chat-messages").append(`<div class="chat-message"><i>${conn.metadata.username} buzzed!</i></div>`);
         $(".chat-messages").scrollTop(1E8);
         
-      } else {
-        // fielding chat msgs
+      } 
+
+      // Fielding chat msgs
+      if (!Array.isArray(data)) {
         let msg = `<div class="chat-message">${conn.metadata.username}: ${data}</div>`;
         for (openConn of openConnections) {
           openConn.send(`@$CHAT${msg}`);
@@ -63,6 +69,12 @@ function getConnected() {
           openConnections.splice(x, 1)
         }
       };
+      let closeMsg = `<div class="chat-message"><i>${conn.metadata.username} disconnected!</i></div>`;
+      for (openConn of openConnections) {
+        openConn.send(`@$CHAT${closeMsg}`);
+      };
+      $(".chat-messages").append(closeMsg);
+      $(".chat-messages").scrollTop(1E8);
     });
 
     conn.on("error", () => {
@@ -74,6 +86,12 @@ function getConnected() {
           openConnections.splice(x, 1)
         }
       };
+      let closeMsg = `<div class="chat-message"><i>${conn.metadata.username} disconnected!</i></div>`;
+      for (openConn of openConnections) {
+        openConn.send(`@$CHAT${closeMsg}`);
+      };
+      $(".chat-messages").append(closeMsg);
+      $(".chat-messages").scrollTop(1E8);
     })
   })
 }
@@ -84,11 +102,8 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 window.onunload = function() {
-  for (openConn of openMediaConnections) {
-    openConn.close()
-  };
   for (openData of openConnections) {
     openData.close()
-  }
+  };
   peer.destroy()
 }
