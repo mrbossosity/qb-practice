@@ -1,4 +1,5 @@
-const app = Vue.createApp({
+const app = new Vue({
+  el: "#app",
   data() {
     return {
       user: username,
@@ -37,5 +38,3 @@ const app = Vue.createApp({
     },
   }
 })
-
-app.mount("#app")
